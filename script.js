@@ -24,6 +24,8 @@ const messageField = document.getElementById('msg');
 const playAgainBtn = document.getElementById('again');
 
 let index = 0;
+let score = 0;
+
 
 showQuestion();
 
@@ -31,10 +33,14 @@ function giveRandomNumber(num) {
     return Math.floor(Math.random() * num);
 }
 
+function giveCorrectAnswer(num) {
+    return questions[num].correct;
+}
+
 function showQuestion() {
     const random = giveRandomNumber(answerSlots.length);
-    const cardIndex = questions[index];
-    const correct = questions[index].correct;
+    let cardIndex = questions[index];
+    let correct = questions[index].correct;
 
     messageField.classList.add('hide');
     playAgainBtn.classList.add('hide');
@@ -53,16 +59,29 @@ function showQuestion() {
     });
 }
 
-function checkNumber(num) {
+function checkNumber(num, correct) {
+
     if (index < questions.length) {
-        index++;
-        showQuestion();
-    }
+
+        if (num === correct) {
+            score++;
+            index++;
+            return showQuestion();
+        }
+        
+    } 
+    return;
 }
 
 answerSlots.forEach(answerSlot => {
+
     answerSlot.addEventListener('click', (e) => {
+
         const chosenNumber = parseInt(e.target.textContent);
-        checkNumber(chosenNumber);
+        const correct = giveCorrectAnswer(index);
+
+        checkNumber(chosenNumber, correct);
+        //console.log(score);
     });
+
 });
