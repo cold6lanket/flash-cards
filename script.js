@@ -51,7 +51,9 @@ function showQuestion() {
     answerSlots[random].textContent = correct;
 
     answerSlots.forEach((answer, i) => {
-        
+
+        answer.classList.remove('fade');
+
         if (random !== i) {    
             answer.textContent = giveRandomNumber(i*correct);
         }
@@ -59,28 +61,33 @@ function showQuestion() {
     });
 }
 
-function checkNumber(num, correct) {
+// function showIncorrectUI(item) {
+//     item.classList.add('fade');
+// }
 
-    if (index < questions.length) {
+function checkNumber(num, correct, item) {
+
+    if (index <= questions.length) {
 
         if (num === correct) {
             score++;
             index++;
             return showQuestion();
         }
-        
+        return item.classList.add('fade');
+
     } 
     return;
 }
 
-answerSlots.forEach(answerSlot => {
+answerSlots.forEach(function(answerSlot) {
 
-    answerSlot.addEventListener('click', (e) => {
-
-        const chosenNumber = parseInt(e.target.textContent);
+    answerSlot.addEventListener('click', function(e) {
+        const slot = e.target;
+        const chosenNumber = parseInt(slot.textContent);
         const correct = giveCorrectAnswer(index);
 
-        checkNumber(chosenNumber, correct);
+        checkNumber(chosenNumber, correct, slot);
         //console.log(score);
     });
 
