@@ -39,8 +39,8 @@ function giveCorrectAnswer(num) {
 
 function showQuestion() {
     const random = giveRandomNumber(answerSlots.length);
-    let cardIndex = questions[index];
-    let correct = questions[index].correct;
+    const cardIndex = questions[index];
+    const correct = questions[index].correct;
 
     messageField.classList.add('hide');
     playAgainBtn.classList.add('hide');
@@ -67,7 +67,7 @@ function showQuestion() {
 
 function checkNumber(num, correct, item) {
 
-    if (index <= questions.length) {
+    if (index < questions.length) {
 
         if (num === correct) {
             score++;
