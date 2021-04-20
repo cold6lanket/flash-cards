@@ -24,7 +24,6 @@ const messageField = document.getElementById('msg');
 const playAgainBtn = document.getElementById('again');
 
 let index = 0;
-let score = 0;
 
 
 showQuestion();
@@ -61,23 +60,34 @@ function showQuestion() {
     });
 }
 
-// function showIncorrectUI(item) {
-//     item.classList.add('fade');
-// }
 
-function checkNumber(num, correct, item) {
 
-    if (index < questions.length) {
+function finishGame() {
+    // show hidden button and message
+    messageField.classList.remove('hide');
+    playAgainBtn.classList.remove('hide');
 
-        if (num === correct) {
-            score++;
+    messageField.innerText = 'Finished! Your record - 51s';
+    // start again
+    playAgainBtn.addEventListener('click', () => {
+        index = 0;
+        showQuestion();
+    });
+}
+
+function checkNumber(num, item) {
+    
+    if (index + 1 < questions.length) {
+        const correct = giveCorrectAnswer(index);
+
+        if (num === correct && index !== questions.length) {
             index++;
-            return showQuestion();
+            return showQuestion();  
         }
         return item.classList.add('fade');
 
     } 
-    return;
+    return finishGame();
 }
 
 answerSlots.forEach(function(answerSlot) {
@@ -85,10 +95,8 @@ answerSlots.forEach(function(answerSlot) {
     answerSlot.addEventListener('click', function(e) {
         const slot = e.target;
         const chosenNumber = parseInt(slot.textContent);
-        const correct = giveCorrectAnswer(index);
-
-        checkNumber(chosenNumber, correct, slot);
-        //console.log(score);
+        console.log(index);
+        return checkNumber(chosenNumber, slot);
     });
 
 });
