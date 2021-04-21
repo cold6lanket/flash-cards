@@ -98,7 +98,6 @@ function checkNumber(num, item) {
 
     } else if (index + 1 === questions.length && num === correct) {
         // end game if it's last question and answer is correct
-        index = 2; 
         return finishGame();
     }
     // hide incorrect numbers
