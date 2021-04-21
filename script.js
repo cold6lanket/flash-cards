@@ -13,6 +13,16 @@ const questions = [
         a: 4,
         b: 4,
         correct: 16
+    },
+    {
+        a: 4,
+        b: 7,
+        correct: 28
+    },
+    {
+        a: 8,
+        b: 9,
+        correct: 72
     }
 ];
 
@@ -24,7 +34,6 @@ const messageField = document.getElementById('msg');
 const playAgainBtn = document.getElementById('again');
 
 let index = 0;
-
 
 showQuestion();
 
@@ -39,20 +48,20 @@ function giveCorrectAnswer(num) {
 function showQuestion() {
     const random = giveRandomNumber(answerSlots.length);
     const cardIndex = questions[index];
-    const correct = questions[index].correct;
-
+    const correct = cardIndex.a * cardIndex.b;
+    // hide button and message
     messageField.classList.add('hide');
     playAgainBtn.classList.add('hide');
 
     optionA.textContent = cardIndex.a;
     optionB.textContent = cardIndex.b;
-
+    // assign correct number to random slot
     answerSlots[random].textContent = correct;
-
+    // assign random number to each remained slots
     answerSlots.forEach((answer, i) => {
-
+        // show hidden slots that was hidden before
         answer.classList.remove('fade');
-
+        // add random numbers to slots except correct slot
         if (random !== i) {    
             answer.textContent = giveRandomNumber(i*correct);
         }
@@ -76,26 +85,33 @@ function finishGame() {
 }
 
 function checkNumber(num, item) {
-    
-    if (index + 1 < questions.length) {
-        const correct = giveCorrectAnswer(index);
-
+    // get correct answer
+    const correct = giveCorrectAnswer(index);
+    // check for statements
+    if (index < questions.length - 1) {
+        // if we still didn't reach last question
         if (num === correct && index !== questions.length) {
             index++;
             return showQuestion();  
         }
         return item.classList.add('fade');
 
-    } 
-    return finishGame();
+    } else if (index + 1 === questions.length && num === correct) {
+        // end game if it's last question and answer is correct
+        index = 2; 
+        return finishGame();
+    }
+    // hide incorrect numbers
+    return item.classList.add('fade');
 }
 
 answerSlots.forEach(function(answerSlot) {
 
     answerSlot.addEventListener('click', function(e) {
+        // target selected answer or slot
         const slot = e.target;
         const chosenNumber = parseInt(slot.textContent);
-        console.log(index);
+
         return checkNumber(chosenNumber, slot);
     });
 
