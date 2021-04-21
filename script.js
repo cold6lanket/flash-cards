@@ -34,8 +34,10 @@ const messageField = document.getElementById('msg');
 const playAgainBtn = document.getElementById('again');
 
 let index = 0;
+let startTime, endTime;
 
 showQuestion();
+start();
 
 function giveRandomNumber(num) {
     return Math.floor(Math.random() * num);
@@ -43,6 +45,21 @@ function giveRandomNumber(num) {
 
 function giveCorrectAnswer(num) {
     return questions[num].correct;
+}
+
+
+function start() {
+    startTime = new Date();
+}
+
+function end() {
+    endTime = new Date();
+    let timeDiff = endTime - startTime; //in ms
+    // strip the ms
+    timeDiff /= 1000;
+
+    // get seconds 
+    return Math.round(timeDiff);  
 }
 
 function showQuestion() {
@@ -69,18 +86,18 @@ function showQuestion() {
     });
 }
 
-
-
 function finishGame() {
+    const record = end();
     // show hidden button and message
     messageField.classList.remove('hide');
     playAgainBtn.classList.remove('hide');
 
-    messageField.innerText = 'Finished! Your record - 51s';
+    messageField.innerText = `Finished! Your record - ${record}s`;
     // start again
     playAgainBtn.addEventListener('click', () => {
         index = 0;
         showQuestion();
+        start();
     });
 }
 

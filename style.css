@@ -96,14 +96,10 @@ span#x {
   display: block;
   float: left;
   font-size: 1.25rem;
-  height: 30px;
+  height: 35px;
   text-align: center;
   width: 100%;
   transition: all .25s ease;
-}
-
-.correct {
-  color: #4254bc;
 }
 
 .again {
@@ -113,15 +109,6 @@ span#x {
   padding: 4px;
   -webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .2);
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .2);
-}
-
-.incorrect {
-  color: #db5151;
-}
-
-.selected {
-  background: rgba(0, 0, 0, .85);
-  color: #FFEBBE;
 }
 
 .hide{
