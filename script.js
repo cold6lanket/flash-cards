@@ -69,14 +69,11 @@ function showQuestion() {
     // hide button and message
     messageField.classList.add('hide');
     playAgainBtn.classList.add('hide');
-
     optionA.textContent = cardIndex.a;
     optionB.textContent = cardIndex.b;
-    // assign correct number to random slot
     answerSlots[random].textContent = correct;
     // assign random number to each remained slots
     answerSlots.forEach((answer, i) => {
-        // show hidden slots that was hidden before
         answer.classList.remove('fade');
         // add random numbers to slots except correct slot
         if (random !== i) {    
@@ -102,19 +99,18 @@ function finishGame() {
 }
 
 function checkNumber(num, item) {
-    // get correct answer
     const correct = giveCorrectAnswer(index);
     // check for statements
     if (index < questions.length - 1) {
-        // if we still didn't reach last question
+
         if (num === correct && index !== questions.length) {
             index++;
             return showQuestion();  
         }
+        
         return item.classList.add('fade');
 
     } else if (index + 1 === questions.length && num === correct) {
-        // end game if it's last question and answer is correct
         return finishGame();
     }
     // hide incorrect numbers
