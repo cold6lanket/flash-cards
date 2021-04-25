@@ -37,7 +37,7 @@ let index = 0;
 let startTime, endTime;
 
 showQuestion();
-start();
+startTimer();
 
 function giveRandomNumber(num) {
     return Math.floor(Math.random() * num);
@@ -47,12 +47,11 @@ function giveCorrectAnswer(num) {
     return questions[num].correct;
 }
 
-
-function start() {
+function startTimer() {
     startTime = new Date();
 }
 
-function end() {
+function endTimer() {
     endTime = new Date();
     let timeDiff = endTime - startTime; //in ms
     // strip the ms
@@ -78,13 +77,12 @@ function showQuestion() {
         // add random numbers to slots except correct slot
         if (random !== i) {    
             answer.textContent = giveRandomNumber(i*correct);
-        }
-        
+        }   
     });
 }
 
 function finishGame() {
-    const record = end();
+    const record = endTimer();
     // show hidden button and message
     messageField.classList.remove('hide');
     playAgainBtn.classList.remove('hide');
@@ -94,7 +92,7 @@ function finishGame() {
     playAgainBtn.addEventListener('click', () => {
         index = 0;
         showQuestion();
-        start();
+        startTimer();
     });
 }
 
@@ -102,14 +100,11 @@ function checkNumber(num, item) {
     const correct = giveCorrectAnswer(index);
     // check for statements
     if (index < questions.length - 1) {
-
         if (num === correct && index !== questions.length) {
             index++;
             return showQuestion();  
         }
-        
         return item.classList.add('fade');
-
     } else if (index + 1 === questions.length && num === correct) {
         return finishGame();
     }
@@ -118,7 +113,6 @@ function checkNumber(num, item) {
 }
 
 answerSlots.forEach(function(answerSlot) {
-
     answerSlot.addEventListener('click', function(e) {
         // target selected answer or slot
         const slot = e.target;
@@ -126,5 +120,4 @@ answerSlots.forEach(function(answerSlot) {
 
         return checkNumber(chosenNumber, slot);
     });
-
 });
